@@ -11,7 +11,7 @@
         content="SAGAR BHUMKAR, .NET Developer, Full Stack Developer, C#, ASP.NET, Angular, SQL Server, Portfolio">
     <meta name="author" content="SAGAR BHUMKAR">
 
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -380,14 +380,17 @@
         }
 
         .theme-switcher {
-            position: relative;
+            position: static;
         }
 
         .theme-toggle {
             background: color-mix(in srgb, var(--primary-color) 10%, transparent);
             border: 1px solid color-mix(in srgb, var(--primary-color) 25%, transparent);
             color: var(--primary-color);
-            padding: 10px 20px;
+            padding: 0;
+            width: 44px;
+            height: 44px;
+            justify-content: center;
             border-radius: var(--border-radius);
             font-family: var(--font-accent);
             font-weight: 600;
@@ -412,7 +415,10 @@
             background: var(--card-bg);
             border-radius: var(--border-radius);
             box-shadow: 0 15px 35px var(--shadow-color-lg);
-            min-width: 220px;
+            width: 290px;
+            max-width: calc(100vw - 56px);
+            max-height: calc(100dvh - 110px);
+            overflow-y: auto;
             padding: 15px;
             display: none;
             flex-direction: column;
@@ -692,13 +698,13 @@
 
         .navbar-menu {
             display: flex;
-            gap: 30px;
+            gap: 20px;
             align-items: center;
         }
 
         .navbar-links {
             display: flex;
-            gap: 30px;
+            gap: 20px;
         }
 
         .navbar-links a {
@@ -766,8 +772,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            
-        }
+            background: radial-gradient(ellipse at 85% 20%, color-mix(in srgb, var(--primary-color) 12%, transparent), transparent 60%);
+            pointer-events: none;        }
 
         .hero-container {
             display: grid;
@@ -812,7 +818,7 @@
         }
 
         .hero-description {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             color: var(--text-secondary);
             margin-bottom: 35px;
             font-weight: 400;
@@ -851,25 +857,15 @@
         }
 
         .profile-photo {
-            width: 420px;
-            height: 420px;
+            display: block;
+            width: min(360px, 100%);
+            height: auto;
+            aspect-ratio: 2 / 3;
             border-radius: var(--border-radius-xl);
-            object-fit: cover;
+            object-fit: contain;
+            background: #000;
             box-shadow: 0 25px 50px var(--shadow-color-lg);
-            animation: float 6s ease-in-out infinite;
-            border: 4px solid var(--primary-color);
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-20px);
-            }
+            border: 1px solid var(--border-color);
         }
 
         .photo-frame {
@@ -924,6 +920,11 @@
             grid-template-columns: 1fr 1fr;
             gap: 60px;
             align-items: start;
+        }
+
+        .about-content > *,
+        .contact-container > * {
+            min-width: 0;
         }
 
         .about-text h3 {
@@ -1019,6 +1020,8 @@
 
         .info-value {
             flex: 1;
+            min-width: 0;
+            overflow-wrap: anywhere;
             color: var(--text-secondary);
             font-weight: 400;
         }
@@ -1276,8 +1279,8 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-            gap: 35px;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+            gap: 28px;
         }
 
         .project-card {
@@ -1288,6 +1291,8 @@
             transition: var(--transition);
             border: 1px solid var(--border-color);
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .project-card:hover {
@@ -1312,11 +1317,13 @@
 
         .project-image {
             height: 220px;
+            flex-shrink: 0;
             overflow: hidden;
             position: relative;
         }
 
         .project-image img {
+            display: block;
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -1329,6 +1336,9 @@
 
         .project-content {
             padding: 30px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
         }
 
         .project-title {
@@ -1359,7 +1369,8 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            margin-top: 20px;
+            margin-top: auto;
+            padding-top: 20px;
         }
 
         .tech-tag {
@@ -1585,20 +1596,42 @@
             text-decoration: none;
         }
 
-        .mobile-theme-menu {
-            display: none;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 20px;
-            padding: 20px;
-            background: color-mix(in srgb, var(--card-bg) 95%, transparent);
-            border-radius: var(--border-radius);
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(10px);
+        .navbar-actions {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .mobile-theme-menu.show {
-            display: flex;
+        :focus-visible {
+            outline: 3px solid var(--primary-color);
+            outline-offset: 4px;
+        }
+
+        section[id] {
+            scroll-margin-top: 100px;
+        }
+
+        .skills,
+        .projects {
+            background: color-mix(in srgb, var(--primary-color) 3%, var(--background));
+        }
+
+        .hero-description strong {
+            font-weight: 400;
+        }
+
+        .reveal.is-pending {
+            opacity: 0;
+            transform: translateY(24px);
+        }
+
+        .reveal {
+            transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.2, 0.65, 0.3, 1);
+        }
+
+        .project-card[hidden] {
+            display: none;
         }
 
         @media (max-width: 1200px) {
@@ -1634,23 +1667,14 @@
             }
 
             .profile-photo {
-                width: 350px;
-                height: 350px;
-            }
-
-            .theme-switcher {
-                display: none;
-            }
-
-            .mobile-theme-toggle {
-                display: block !important;
+                width: 320px;
             }
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1100px) {
             .navbar-menu {
-                position: fixed;
-                top: 80px;
+                position: absolute;
+                top: 100%;
                 left: -100%;
                 width: 100%;
                 background: var(--card-bg);
@@ -1663,10 +1687,14 @@
                 border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
                 align-items: flex-start;
                 backdrop-filter: blur(20px);
+                max-height: calc(100dvh - 110px);
+                overflow-y: auto;
+                visibility: hidden;
             }
 
             .navbar-menu.active {
                 left: 0;
+                visibility: visible;
             }
 
             .navbar-links {
@@ -1679,26 +1707,9 @@
                 display: block;
             }
 
-            .mobile-theme-toggle {
-                display: block;
-                background: color-mix(in srgb, var(--primary-color) 10%, transparent);
-                border: 1px solid color-mix(in srgb, var(--primary-color) 25%, transparent);
-                color: var(--primary-color);
-                padding: 12px 20px;
-                border-radius: var(--border-radius);
-                cursor: pointer;
-                transition: var(--transition);
-                font-size: 0.9rem;
-                margin-top: 20px;
-                width: 100%;
-                text-align: center;
-                font-weight: 600;
-                font-family: var(--font-accent);
-            }
+        }
 
-            .mobile-theme-toggle:hover {
-                background: color-mix(in srgb, var(--primary-color) 20%, transparent);
-            }
+        @media (max-width: 768px) {
 
             .hero-title {
                 font-size: 2.8rem;
@@ -1764,8 +1775,7 @@
             }
 
             .profile-photo {
-                width: 280px;
-                height: 280px;
+                width: min(280px, 100%);
             }
 
             .info-item {
@@ -1797,13 +1807,80 @@
             }
         }
 
-        .mobile-theme-toggle {
-            display: none;
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .navbar-brand {
+                gap: 8px;
+            }
+
+            .brand-name {
+                font-size: 1.05rem;
+            }
+
+            .brand-tagline {
+                font-size: 0.55rem;
+                letter-spacing: 0.4px;
+            }
+
+            .navbar-actions {
+                gap: 8px;
+            }
+
+            .logo {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+
+            .hero {
+                padding-top: 140px;
+            }
+
+            .experience-display {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .contact-text {
+                min-width: 0;
+                overflow-wrap: anywhere;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+
+            .reveal.is-pending {
+                opacity: 1;
+                transform: none;
+            }
         }
     </style>
+    <link rel="stylesheet" href="css/portfolio-3d.css">
+    <link rel="stylesheet" href="css/portfolio-slides.css">
+    <script src="lib/cinematic/three.min.js" defer></script>
+    <script src="lib/cinematic/gsap.min.js" defer></script>
+    <script src="lib/cinematic/ScrollTrigger.min.js" defer></script>
+    <script src="js/portfolio-3d.js" defer></script>
+    <script src="js/portfolio-slides.js" defer></script>
 </head>
 
 <body>
+    <div class="journey-progress" aria-hidden="true"></div>
+    <div class="ambient-scene" aria-hidden="true">
+        <div class="ambient-orb"></div>
+        <div class="ambient-grid"></div>
+    </div>
     <nav class="navbar">
         <div class="container navbar-container">
             <a href="#home" class="navbar-brand">
@@ -1813,10 +1890,6 @@
                     <div class="brand-tagline">Senior Full Stack Developer</div>
                 </div>
             </a>
-
-            <button class="navbar-toggle" id="navbar-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
 
             <div class="navbar-menu" id="navbar-menu">
                 <div class="navbar-links">
@@ -1829,14 +1902,23 @@
                 </div>
 
 
+                <a href="#contact" class="btn btn-primary">Get In Touch</a>
+            </div>
+
+            <div class="navbar-actions">
                 <div class="theme-switcher">
-                    <button class="theme-toggle" id="theme-toggle">
-                        <i class="fas fa-palette"></i>
-                        <span>Themes</span>
-                        <i class="fas fa-chevron-down"></i>
+                    <button class="theme-toggle" id="theme-toggle" type="button"
+                        aria-label="Choose color theme" title="Choose color theme"
+                        aria-expanded="false" aria-controls="theme-menu">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M12 3a9 9 0 1 0 0 18h1.4a2.1 2.1 0 0 0 1.5-3.6 1.3 1.3 0 0 1 .9-2.2H18a3 3 0 0 0 3-3A9 9 0 0 0 12 3Z"/>
+                            <circle cx="7.5" cy="10" r=".75"/><circle cx="10.5" cy="6.8" r=".75"/>
+                            <circle cx="15" cy="7.5" r=".75"/><circle cx="17.5" cy="11" r=".75"/>
+                        </svg>
                     </button>
 
-                    <div class="theme-menu" id="theme-menu">
+                    <div class="theme-menu" id="theme-menu" role="group" aria-label="Color themes">
                         <div class="theme-menu-header">Select Theme</div>
 
                         <button class="theme-option active" data-theme="default">
@@ -1894,55 +1976,10 @@
                     </div>
                 </div>
 
-                <a href="#contact" class="btn btn-primary">Get In Touch</a>
-
-                <button class="mobile-theme-toggle" id="mobile-theme-toggle">
-                    <i class="fas fa-palette"></i> Change Theme
+                <button class="navbar-toggle" id="navbar-toggle" type="button"
+                    aria-label="Open navigation" aria-expanded="false" aria-controls="navbar-menu">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
                 </button>
-
-                <div class="mobile-theme-menu" id="mobile-theme-menu">
-                    <button class="theme-option active" data-theme="default">
-                        <div class="theme-indicator" style="background: linear-gradient(135deg, #2563eb, #7c3aed);">
-                        </div>
-                        <span class="theme-name">Modern Classic</span>
-                    </button>
-
-                    <button class="theme-option" data-theme="techelegance">
-                        <div class="theme-indicator" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">
-                        </div>
-                        <span class="theme-name">Tech Elegance</span>
-                    </button>
-
-                    <button class="theme-option" data-theme="developerpro">
-                        <div class="theme-indicator" style="background: linear-gradient(135deg, #10b981, #3b82f6);">
-                        </div>
-                        <span class="theme-name">Developer Pro</span>
-                    </button>
-
-                    <button class="theme-option" data-theme="corporateblue">
-                        <div class="theme-indicator" style="background: linear-gradient(135deg, #1d4ed8, #0ea5e9);">
-                        </div>
-                        <span class="theme-name">Corporate Blue</span>
-                    </button>
-
-                    <button class="theme-option" data-theme="nightvision">
-                        <div class="theme-indicator" style="background: linear-gradient(135deg, #8b5cf6, #3b82f6);">
-                        </div>
-                        <span class="theme-name">Night Vision</span>
-                    </button>
-
-                    <button class="theme-option" data-theme="minimallight">
-                        <div class="theme-indicator" style="background: linear-gradient(135deg, #000000, #6b7280);">
-                        </div>
-                        <span class="theme-name">Minimal Light</span>
-                    </button>
-
-                    <button class="theme-option" data-theme="creativepurple">
-                        <div class="theme-indicator" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">
-                        </div>
-                        <span class="theme-name">Creative Purple</span>
-                    </button>
-                </div>
             </div>
         </div>
     </nav>
@@ -1950,6 +1987,7 @@
     <section id="home" class="hero section">
         <div class="container hero-container">
             <div class="hero-content">
+                <p class="studio-eyebrow"><span></span> CODE. CREATE. MAKE IT MATTER.</p>
                 <span class="hero-badge">
                     SENIOR FULL STACK DEVELOPER
                 </span>
@@ -1993,12 +2031,33 @@
             </div>
 
             <div class="hero-image">
-                <div class="photo-frame">
-                    <img src="images/bg_1.png" alt="SAGAR BHUMKAR - .NET Developer" class="profile-photo">
+                <div class="developer-scene">
+                    <div class="scene-orbit orbit-one" aria-hidden="true"></div>
+                    <div class="scene-orbit orbit-two" aria-hidden="true"></div>
+                    <div class="scene-planet" aria-hidden="true"></div>
+                    <div class="photo-frame">
+                        <div class="portrait-label" aria-hidden="true"><span></span> developer.in.focus</div>
+                        <img src="images/bg_1.png" alt="Sagar Bhumkar - Full Stack Developer" class="profile-photo"
+                            width="768" height="1152" fetchpriority="high" decoding="async">
+                        <div class="portrait-caption" aria-hidden="true">SAGAR / FULL STACK<br><span>Turning ideas into experiences.</span></div>
+                    </div>
+                    <div class="floating-tech tech-dotnet" aria-hidden="true"><b>&lt;/&gt;</b> .NET + C#</div>
+                    <div class="floating-tech tech-react" aria-hidden="true"><b>{ }</b> React</div>
+                    <div class="floating-tech tech-node" aria-hidden="true"><b>_</b> Node.js</div>
+                    <div class="scene-console" aria-hidden="true">
+                        <div><span class="console-dot"></span><span class="console-dot"></span><span class="console-dot"></span> build-something-great.ts</div>
+                        <code><span>const</span> developer = {<br>&nbsp; mindset: <em>"always building"</em>,<br>&nbsp; ideas: <em>Infinity</em><br>};</code>
+                    </div>
                 </div>
+                <p class="scene-hint">MOVE YOUR CURSOR. EXPLORE THE DEPTH.</p>
             </div>
         </div>
+        <a class="scroll-invitation" href="#about"><span aria-hidden="true">&#8595;</span> Scroll to explore <span class="scroll-line" aria-hidden="true"></span></a>
     </section>
+
+    <div class="stack-ribbon" aria-label="Technology stack">
+        <div><span>.NET / C#</span><i aria-hidden="true">+</i><span>ANGULAR</span><i aria-hidden="true">+</i><span>REACT</span><i aria-hidden="true">+</i><span>NODE.JS</span><i aria-hidden="true">+</i><span>SQL SERVER</span><i aria-hidden="true">+</i><span>BUILT WITH CURIOSITY</span></div>
+    </div>
 
     <section id="about" class="about section">
         <div class="container">
@@ -2339,11 +2398,11 @@
                 <div class="project-card" data-category="quatrro">
                     <div class="project-badge">Enterprise</div>
                     <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                            alt="Xport V2">
+                        <img src="images/proj_1.jpg" alt="ContinueFlow V2 - ERP Accounting System"
+                            width="800" height="427" loading="lazy" decoding="async">
                     </div>
                     <div class="project-content">
-                        <h3 class="project-title">Xport V2 - ERP Accounting</h3>
+                        <h3 class="project-title">ContinueFlow V2 - ERP Accounting</h3>
                         <span class="project-company">Quatrro Business Solutions</span>
                         <p class="project-description">
                             Next-generation ERP-based accounting system with real-time invoice processing and
@@ -2361,8 +2420,8 @@
                 <div class="project-card" data-category="quatrro">
                     <div class="project-badge">Retail</div>
                     <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                            alt="StoreTracker">
+                        <img src="images/proj_2.jpg" alt="StoreTracker - Retail Management"
+                            width="251" height="201" loading="lazy" decoding="async">
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">StoreTracker - Retail Management</h3>
@@ -2374,7 +2433,7 @@
                             <span class="tech-tag">Angular 14</span>
                             <span class="tech-tag">Node.Js</span>
                             <span class="tech-tag">WebSocket</span>
-                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">SQL Server</span>
                         </div>
                     </div>
                 </div>
@@ -2382,8 +2441,8 @@
                 <div class="project-card" data-category="softra">
                     <div class="project-badge">Energy</div>
                     <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                            alt="ERMS">
+                        <img src="images/proj_4.jpg" alt="Energy Retail Management System"
+                            width="300" height="168" loading="lazy" decoding="async">
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">Energy Retail Management System</h3>
@@ -2404,8 +2463,8 @@
                 <div class="project-card" data-category="quatrro">
                     <div class="project-badge">E-commerce</div>
                     <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                            alt="ShopMonkey">
+                        <img src="images/proj_3.jpg" alt="ShopMonkey - E-commerce Platform"
+                            width="750" height="600" loading="lazy" decoding="async">
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">ShopMonkey - E-commerce Platform</h3>
@@ -2425,8 +2484,8 @@
                 <div class="project-card" data-category="quatrro">
                     <div class="project-badge">Finance</div>
                     <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                            alt="Cost Allocation">
+                        <img src="images/proj_1.jpg" alt="Cost Allocation System"
+                            width="800" height="427" loading="lazy" decoding="async">
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">Cost Allocation System</h3>
@@ -2447,8 +2506,8 @@
                 <div class="project-card" data-category="personal">
                     <div class="project-badge">Innovation</div>
                     <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                            alt="Gesture Control Robot">
+                        <img src="images/proj_4.jpg" alt="Gesture Control Robot"
+                            width="300" height="168" loading="lazy" decoding="async">
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">Gesture Control Robot</h3>
@@ -2577,6 +2636,12 @@
         </div>
     </section>
 
+    <a class="chapter-compass" href="#home" aria-label="Back to top">
+        <span class="compass-orbit" aria-hidden="true"></span>
+        <span><small>EXPLORING</small><span id="journey-chapter">01 / Hello</span></span>
+        <span aria-hidden="true">&#8593;</span>
+    </a>
+
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -2584,7 +2649,8 @@
                     <div class="logo" style="width: 45px; height: 45px; font-size: 1.2rem;">SB</div>
                     <div>
                         <h3 style="margin: 0; font-size: 1.3rem; color: white;">SAGAR BHUMKAR</h3>
-                        <p style="margin: 0; font-size: 0.85rem; color: rgba(255, 255, 255, 0.7);">SENIOR Full STACK DEVELOPER
+                        <p style="margin: 0; font-size: 0.85rem; color: rgba(255, 255, 255, 0.7);">SENIOR Full STACK
+                            DEVELOPER
                         </p>
                     </div>
                 </div>
@@ -2699,119 +2765,75 @@
 
         function initThemeSwitcher() {
             const themeOptions = document.querySelectorAll('.theme-option');
-            const savedTheme = localStorage.getItem('portfolio-theme') || 'default';
+            let savedTheme = 'default';
+            try {
+                const storedTheme = localStorage.getItem('portfolio-theme');
+                if (storedTheme && Object.hasOwn(themes, storedTheme)) {
+                    savedTheme = storedTheme;
+                } else if (storedTheme) {
+                    console.warn('Unknown saved portfolio theme:', storedTheme);
+                }
+            } catch (error) {
+                console.warn('Theme preferences cannot be read in this browser.', error);
+            }
             const currentThemeDisplay = document.getElementById('current-theme-display');
             const currentThemeFooter = document.getElementById('current-theme-footer');
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeMenu = document.getElementById('theme-menu');
 
-            setTheme(savedTheme);
-
-            themeOptions.forEach(option => {
-                if (option.dataset.theme === savedTheme) {
-                    option.classList.add('active');
-                } else {
-                    option.classList.remove('active');
-                }
-            });
-
-            if (currentThemeDisplay) {
-                currentThemeDisplay.textContent = `Current: ${themes[savedTheme].name}`;
+            function applyTheme(theme) {
+                setTheme(theme);
+                document.documentElement.style.colorScheme = themes[theme].type;
+                themeOptions.forEach(option => {
+                    const selected = option.dataset.theme === theme;
+                    option.classList.toggle('active', selected);
+                    option.setAttribute('aria-pressed', String(selected));
+                });
+                currentThemeDisplay.textContent = `Current: ${themes[theme].name}`;
+                currentThemeFooter.textContent = themes[theme].name;
+                themeToggle.title = `Choose color theme (current: ${themes[theme].name})`;
             }
 
-            if (currentThemeFooter) {
-                currentThemeFooter.textContent = themes[savedTheme].name;
+            function toggleThemeMenu(open, restoreFocus = false) {
+                themeMenu.classList.toggle('show', open);
+                themeToggle.setAttribute('aria-expanded', String(open));
+                if (open) themeMenu.querySelector('.theme-option.active').focus();
+                if (restoreFocus) themeToggle.focus();
             }
+
+            applyTheme(savedTheme);
 
             themeOptions.forEach(option => {
                 option.addEventListener('click', () => {
                     const theme = option.dataset.theme;
-                    setTheme(theme);
-
-                    themeOptions.forEach(opt => opt.classList.remove('active'));
-                    option.classList.add('active');
-
-                    localStorage.setItem('portfolio-theme', theme);
-
-                    if (currentThemeDisplay) {
-                        currentThemeDisplay.textContent = `Current: ${themes[theme].name}`;
+                    applyTheme(theme);
+                    try {
+                        localStorage.setItem('portfolio-theme', theme);
+                    } catch (error) {
+                        console.warn('The selected theme could not be saved.', error);
                     }
-
-                    if (currentThemeFooter) {
-                        currentThemeFooter.textContent = themes[theme].name;
-                    }
-
-                    const themeMenu = document.getElementById('theme-menu');
-                    const mobileThemeMenu = document.getElementById('mobile-theme-menu');
-                    if (themeMenu) themeMenu.classList.remove('show');
-                    if (mobileThemeMenu) mobileThemeMenu.classList.remove('show');
-
-                    updateThemeIndicators();
+                    toggleThemeMenu(false, true);
                 });
             });
 
-            const themeToggle = document.getElementById('theme-toggle');
-            const themeMenu = document.getElementById('theme-menu');
+            themeToggle.addEventListener('click', () => {
+                document.getElementById('navbar-menu').classList.remove('active');
+                const navbarToggle = document.getElementById('navbar-toggle');
+                navbarToggle.setAttribute('aria-expanded', 'false');
+                navbarToggle.setAttribute('aria-label', 'Open navigation');
+                navbarToggle.innerHTML = '<i class="fas fa-bars" aria-hidden="true"></i>';
+                toggleThemeMenu(!themeMenu.classList.contains('show'));
+            });
 
-            if (themeToggle && themeMenu) {
-                themeToggle.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    themeMenu.classList.toggle('show');
-                });
-
-                document.addEventListener('click', (e) => {
-                    if (!themeToggle.contains(e.target) && !themeMenu.contains(e.target)) {
-                        themeMenu.classList.remove('show');
-                    }
-                });
-            }
-
-            const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
-            const mobileThemeMenu = document.getElementById('mobile-theme-menu');
-
-            if (mobileThemeToggle && mobileThemeMenu) {
-                mobileThemeToggle.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    mobileThemeMenu.classList.toggle('show');
-                });
-
-                document.addEventListener('click', (e) => {
-                    if (!mobileThemeToggle.contains(e.target) && !mobileThemeMenu.contains(e.target)) {
-                        mobileThemeMenu.classList.remove('show');
-                    }
-                });
-            }
-
-            updateThemeIndicators();
-        }
-
-        function updateThemeIndicators() {
-            const themeIndicators = document.querySelectorAll('.theme-indicator');
-            themeIndicators.forEach(indicator => {
-                const themeOption = indicator.closest('.theme-option');
-                if (themeOption) {
-                    const theme = themeOption.dataset.theme;
-                    switch (theme) {
-                        case 'default':
-                            indicator.style.background = 'linear-gradient(135deg, #2563eb, #7c3aed)';
-                            break;
-                        case 'techelegance':
-                            indicator.style.background = 'linear-gradient(135deg, #3b82f6, #8b5cf6)';
-                            break;
-                        case 'developerpro':
-                            indicator.style.background = 'linear-gradient(135deg, #10b981, #3b82f6)';
-                            break;
-                        case 'corporateblue':
-                            indicator.style.background = 'linear-gradient(135deg, #1d4ed8, #0ea5e9)';
-                            break;
-                        case 'nightvision':
-                            indicator.style.background = 'linear-gradient(135deg, #8b5cf6, #3b82f6)';
-                            break;
-                        case 'minimallight':
-                            indicator.style.background = 'linear-gradient(135deg, #000000, #6b7280)';
-                            break;
-                        case 'creativepurple':
-                            indicator.style.background = 'linear-gradient(135deg, #8b5cf6, #ec4899)';
-                            break;
-                    }
+            document.addEventListener('click', (event) => {
+                if (!event.target.closest('.theme-switcher')) toggleThemeMenu(false);
+            });
+            document.addEventListener('focusin', (event) => {
+                if (!event.target.closest('.theme-switcher')) toggleThemeMenu(false);
+            });
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && themeMenu.classList.contains('show')) {
+                    toggleThemeMenu(false, true);
                 }
             });
         }
@@ -2836,27 +2858,40 @@
             const navbarMenu = document.getElementById('navbar-menu');
 
             if (navbarToggle && navbarMenu) {
+                function closeMenu() {
+                    navbarMenu.classList.remove('active');
+                    navbarToggle.setAttribute('aria-expanded', 'false');
+                    navbarToggle.setAttribute('aria-label', 'Open navigation');
+                    navbarToggle.innerHTML = '<i class="fas fa-bars" aria-hidden="true"></i>';
+                }
+
                 navbarToggle.addEventListener('click', () => {
                     navbarMenu.classList.toggle('active');
-                    navbarToggle.innerHTML = navbarMenu.classList.contains('active')
-                        ? '<i class="fas fa-times"></i>'
-                        : '<i class="fas fa-bars"></i>';
+                    const open = navbarMenu.classList.contains('active');
+                    navbarToggle.setAttribute('aria-expanded', String(open));
+                    navbarToggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+                    navbarToggle.innerHTML = open
+                        ? '<i class="fas fa-times" aria-hidden="true"></i>'
+                        : '<i class="fas fa-bars" aria-hidden="true"></i>';
                 });
 
                 document.querySelectorAll('.navbar-links a, .btn-primary, .btn-secondary').forEach(link => {
                     link.addEventListener('click', () => {
-                        navbarMenu.classList.remove('active');
-                        navbarToggle.innerHTML = '<i class="fas fa-bars"></i>';
-
-                        const mobileThemeMenu = document.getElementById('mobile-theme-menu');
-                        if (mobileThemeMenu) mobileThemeMenu.classList.remove('show');
+                        closeMenu();
                     });
+                });
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape' && navbarMenu.classList.contains('active')) {
+                        closeMenu();
+                        navbarToggle.focus();
+                    }
                 });
             }
         }
 
         function initNavbarScroll() {
             window.addEventListener('scroll', () => {
+                if (document.body.classList.contains('cinematic-ready')) return;
                 const navbar = document.querySelector('.navbar');
                 if (window.scrollY > 50) {
                     navbar.classList.add('scrolled');
@@ -2914,47 +2949,60 @@
                     btn.classList.add('active');
 
                     projectCards.forEach(card => {
-                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
-                            card.style.display = 'block';
-                            setTimeout(() => {
-                                card.style.opacity = '1';
-                                card.style.transform = 'translateY(0)';
-                            }, 10);
-                        } else {
-                            card.style.opacity = '0';
-                            card.style.transform = 'translateY(20px)';
-                            setTimeout(() => {
-                                card.style.display = 'none';
-                            }, 300);
-                        }
+                        card.hidden = filter !== 'all' && card.getAttribute('data-category') !== filter;
                     });
                 });
             });
         }
 
-        function initSkillBars() {
-            function animateSkillBars() {
-                const skillBars = document.querySelectorAll('.skill-progress');
+        function initScrollAnimations() {
+            const elements = document.querySelectorAll(
+                '.hero-content, .hero-image, .section-header, .about-text, .personal-info, ' +
+                '.skill-category, .experience-item, .project-card, .contact-info, .contact-form'
+            );
+            const skillBars = document.querySelectorAll('.skill-progress');
+            const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-                skillBars.forEach(bar => {
-                    const rect = bar.getBoundingClientRect();
-                    const isVisible = (rect.top >= 0 && rect.bottom <= window.innerHeight);
-
-                    if (isVisible && !bar.classList.contains('animated')) {
-                        const width = bar.getAttribute('data-width');
-                        bar.style.width = width + '%';
-                        bar.classList.add('animated');
-                    }
-                });
+            function reveal(element) {
+                element.classList.remove('is-pending');
+                if (element.classList.contains('skill-progress')) {
+                    element.style.width = `${element.dataset.width}%`;
+                }
             }
 
-            window.addEventListener('scroll', animateSkillBars);
-            setTimeout(animateSkillBars, 500);
+            if (motionPreference.matches || !('IntersectionObserver' in window)) {
+                elements.forEach(reveal);
+                skillBars.forEach(reveal);
+                return;
+            }
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        reveal(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.08 });
+
+            elements.forEach(element => {
+                element.classList.add('reveal', 'is-pending');
+                observer.observe(element);
+            });
+            skillBars.forEach(bar => observer.observe(bar));
+            motionPreference.addEventListener('change', event => {
+                if (event.matches) {
+                    observer.disconnect();
+                    elements.forEach(reveal);
+                    skillBars.forEach(reveal);
+                }
+            });
         }
 
         function initSmoothScroll() {
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
+                    if (e.defaultPrevented) return;
                     e.preventDefault();
 
                     const targetId = this.getAttribute('href');
@@ -2964,7 +3012,7 @@
                     if (targetElement) {
                         window.scrollTo({
                             top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
+                            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
                         });
                     }
                 });
@@ -3002,21 +3050,12 @@
             initNavbarScroll();
             initExperienceTabs();
             initProjectFilter();
-            initSkillBars();
+            initScrollAnimations();
             initSmoothScroll();
             initContactForm();
 
             setInterval(updateExperienceDisplay, 30 * 24 * 60 * 60 * 1000);
 
-            document.querySelectorAll('.btn').forEach(btn => {
-                btn.addEventListener('mouseenter', function () {
-                    this.style.transform = 'translateY(-3px) scale(1.02)';
-                });
-
-                btn.addEventListener('mouseleave', function () {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
-            });
         });
     </script>
 </body>

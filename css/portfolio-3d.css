@@ -1,0 +1,211 @@
+.cinematic-ready {
+    --background: #070d19;
+    --card-bg: #101e32;
+    --text-color: #edf5ff;
+    --text-secondary: #b0bfd5;
+    --border-color: #2a3c55;
+    --hero-gradient: transparent;
+    --hero-gradient-dark: transparent;
+    --shadow-color: #0003;
+    --shadow-color-lg: #0005;
+    background: var(--background);
+    color: var(--text-color);
+    transition: background-color 0.3s ease;
+}
+
+.cinematic-ready.theme-minimallight,
+.cinematic-ready.theme-corporateblue,
+.cinematic-ready.theme-techelegance {
+    --background: #edf3fa;
+    --card-bg: #fff;
+    --text-color: #11233f;
+    --text-secondary: #425675;
+    --border-color: #c3d0e0;
+}
+
+.cinematic-ready.theme-developerpro { --background: #061712; --card-bg: #0c2a23; }
+.cinematic-ready.theme-creativepurple { --background: #130c23; --card-bg: #231535; }
+.cinematic-ready.theme-nightvision { --background: #080d21; --card-bg: #151d39; }
+
+.ambient-scene,
+.chapter-compass,
+.scene-orbit,
+.scene-planet,
+.floating-tech,
+.scene-console,
+.scene-hint {
+    display: none;
+}
+
+.journey-progress {
+    position: fixed;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 3px;
+    transform: scaleX(var(--journey, 0));
+    transform-origin: left;
+    z-index: 1200;
+    background: var(--primary-gradient);
+    pointer-events: none;
+}
+
+.cinematic-ready .navbar {
+    padding: 0.7rem 0;
+    background: color-mix(in srgb, var(--background) 94%, transparent);
+}
+
+.cinematic-ready .hero,
+.cinematic-ready .skills,
+.cinematic-ready .projects,
+.cinematic-ready .contact,
+.cinematic-ready .contact::before {
+    background: none;
+}
+
+.cinematic-ready .hero::before { display: none; }
+.cinematic-ready .hero-title {
+    font-size: clamp(2.6rem, 5vw, 4.8rem);
+    letter-spacing: -0.055em;
+    text-shadow: 0 8px 40px #0002;
+}
+
+.studio-eyebrow {
+    font: 0.65rem/1.6 var(--font-mono);
+    letter-spacing: 0.15em;
+    color: var(--primary-light);
+}
+
+.studio-eyebrow > span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: var(--primary-light);
+}
+
+.cinematic-ready .hero-content,
+.cinematic-ready .section-header {
+    position: relative;
+    z-index: 1;
+}
+
+.cinematic-ready .hero-description {
+    max-width: 570px;
+    font-size: 1.05rem;
+}
+
+.cinematic-ready .hero-image { perspective: 1200px; }
+.developer-scene { display: grid; place-items: center; padding: 25px; }
+.developer-scene .photo-frame {
+    width: min(290px, 85%);
+    transform: rotateY(-12deg) rotateZ(2deg);
+    border: 1px solid var(--border-color);
+    border-radius: 22px;
+    box-shadow: 12px 18px 0 color-mix(in srgb, var(--primary-color) 12%, transparent), 0 25px 55px #0005;
+    background: #03060d;
+}
+.developer-scene .photo-frame::before { display: none; }
+.developer-scene .profile-photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border: 0;
+    border-radius: 22px;
+    box-shadow: none;
+}
+.portrait-label,
+.portrait-caption {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    color: #d3e6fb;
+    font: 0.6rem/1.7 var(--font-mono);
+}
+.portrait-label { top: 16px; }
+.portrait-caption { bottom: 18px; text-align: left; }
+.portrait-caption span { color: #a4bbd6; font-size: 0.52rem; }
+
+.scroll-invitation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 30px auto;
+    width: fit-content;
+    color: var(--text-secondary);
+    font: 0.7rem var(--font-mono);
+}
+.scroll-invitation > span:first-child { font-size: 1.4rem; color: var(--primary-light); }
+.stack-ribbon {
+    border-block: 1px solid var(--border-color);
+    padding: 16px 0;
+    overflow: hidden;
+    color: var(--text-secondary);
+}
+.stack-ribbon > div {
+    display: flex;
+    justify-content: space-around;
+    gap: 24px;
+    padding: 0 24px;
+    flex-wrap: wrap;
+    font: 0.62rem var(--font-mono);
+}
+.stack-ribbon i { color: var(--primary-light); font-style: normal; }
+
+.cinematic-ready .section-title {
+    font-size: clamp(2rem, 3.7vw, 3.3rem);
+    letter-spacing: -0.05em;
+}
+
+.cinematic-ready :is(.personal-info, .skill-category, .experience-item, .project-card, .contact-form) {
+    background: color-mix(in srgb, var(--card-bg) 96%, transparent);
+    box-shadow: 0 20px 50px #0002;
+    border: 1px solid var(--border-color);
+}
+.cinematic-ready .about-text,
+.cinematic-ready .contact-info {
+    padding: 30px;
+    background: color-mix(in srgb, var(--card-bg) 96%, transparent);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+}
+.cinematic-ready .about-content,
+.cinematic-ready .contact-container { gap: 32px; }
+.cinematic-ready .about-stats { gap: 16px; }
+.cinematic-ready .stat-item { flex: 1; }
+.cinematic-ready .stat-item p { font-size: 0.7rem; }
+.cinematic-ready .stat-item h4 { font-size: 2rem; }
+.cinematic-ready .project-card { transform: perspective(1000px) rotateY(var(--card-turn, 0deg)); }
+.cinematic-ready .project-card:hover { transform: perspective(1000px) rotateY(-3deg) translateY(-5px); }
+.cinematic-ready .experience-item { border-left: 3px solid var(--primary-light); }
+.cinematic-ready .contact :is(h2, h4) { color: var(--text-color); }
+.cinematic-ready .contact :is(p, .contact-text a) { color: var(--text-secondary); }
+.cinematic-ready .contact .section-title { color: var(--text-color) !important; }
+.cinematic-ready .contact .section-subtitle { color: var(--text-secondary) !important; }
+.cinematic-ready .contact-form { backdrop-filter: none; }
+.cinematic-ready .contact-form label { color: var(--text-color); }
+.cinematic-ready .form-control {
+    color: var(--text-color);
+    background: var(--background);
+    border-color: var(--border-color);
+}
+.cinematic-ready .footer { margin-top: 40px; background: var(--background); }
+
+@media (max-width: 992px) {
+    .studio-eyebrow { text-align: center; }
+    .developer-scene .photo-frame { width: 240px; }
+    .cinematic-ready .hero-container { gap: 20px; }
+}
+@media (max-width: 576px) {
+    .developer-scene .photo-frame { width: min(220px, 90%); }
+    .cinematic-ready .about-text,
+    .cinematic-ready .contact-info { padding: 22px 18px; }
+    .cinematic-ready .hero-title { font-size: 2.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .developer-scene .photo-frame,
+    .cinematic-ready .project-card,
+    .cinematic-ready .project-card:hover { transform: none; }
+}
