@@ -13,7 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.append(status);
     function notify(message) { status.textContent = message; }
     const hasTimeline = Boolean(window.gsap && window.ScrollTrigger);
-    if (hasTimeline) window.gsap.registerPlugin(window.ScrollTrigger);
+    if (hasTimeline) {
+        window.gsap.registerPlugin(window.ScrollTrigger);
+        window.ScrollTrigger.config({ ignoreMobileResize: true, autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load' });
+    }
     else {
         console.warn('GSAP/ScrollTrigger did not load. The portfolio will use its readable document layout.');
         notify('Animation libraries are unavailable. All content is available in the standard layout.');
@@ -49,15 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
     controls.className = 'scene-controls';
     controls.setAttribute('aria-label', 'Cinematic journey navigation');
     controls.innerHTML = '<button type="button" class="scene-previous" aria-label="Previous scene">&#8592;</button>' +
-        '<div class="scene-readout"><span></span><small>SCROLL TO MOVE THROUGH THE WORLD</small></div>' +
+        
         '<div class="scene-dots"></div>' +
         '<button type="button" class="scene-next" aria-label="Next scene">&#8594;</button>' +
         '<span class="scene-announcement" role="status" aria-live="polite"></span>';
     document.body.append(controls);
     const previous = controls.querySelector('.scene-previous');
     const next = controls.querySelector('.scene-next');
-    const readout = controls.querySelector('.scene-readout > span');
-    const hint = controls.querySelector('.scene-readout > small');
     const announcement = controls.querySelector('.scene-announcement');
     const dots = sections.map((section, index) => {
         const button = document.createElement('button');
@@ -105,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         previous.disabled = index === 0;
         next.disabled = index === sections.length - 1;
-        readout.textContent = names[index];
         announcement.textContent = names[index];
         dots.forEach((button, position) => {
             if (position === index) button.setAttribute('aria-current', 'step');
@@ -142,8 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setActive(current);
         const progress = total ? position / total : 0;
         document.documentElement.style.setProperty('--journey', progress.toFixed(5));
-        hint.textContent = document.querySelector('.project-dialog[open]') ? 'EXPLORING PROJECT / ESC TO RETURN'
-            : current === 5 && progress > 0.99 ? 'THE NEXT CHAPTER STARTS WITH YOU' : 'SCROLL TO MOVE THROUGH THE WORLD';
         if (world) world.update(cameraState, progress);
     }
 
@@ -172,6 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
             timeline.kill();
             timeline = null;
         }
+        document.documentElement.style.setProperty('--stage-h', `${window.innerHeight}px`);
         document.documentElement.style.setProperty('--nav-height', `${navbar.getBoundingClientRect().height}px`);
         sections.forEach(section => {
             section.removeAttribute('style');
@@ -244,8 +243,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function scheduleRebuild() {
+        if (document.activeElement?.matches('input,textarea,select')) { rebuildPending = true; return; }
         if (!rebuildFrame && !building) rebuildFrame = requestAnimationFrame(rebuild);
     }
+    // The mobile keyboard resizes the viewport; rebuilding then would reset the scene and drop focus.
+    let rebuildPending = false;
+    listen(document, 'focusout', () => {
+        setTimeout(() => {
+            if (rebuildPending && !document.activeElement?.matches('input,textarea,select')) {
+                rebuildPending = false;
+                scheduleRebuild();
+            }
+        }, 350);
+    });
 
     function closeNavigation() {
         document.getElementById('navbar-menu').classList.remove('active');
