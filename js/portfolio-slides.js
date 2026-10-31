@@ -119,7 +119,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const frozenY = [];
+    let editing = false;
+    let editScroll = 0;
+    let keyboardShift = 0;
+    function isField(element) { return Boolean(element?.matches?.('input,textarea,select')); }
+
     function renderJourney() {
+        if (editing && timeline) {
+            // Keep the scene still while the mobile keyboard is open.
+            contents[active].style.transform = `translate3d(0,${(frozenY[active] || 0) - keyboardShift}px,0)`;
+            return;
+        }
         const position = playhead.position;
         const viewport = stage.clientHeight;
         let current = 0;
@@ -136,7 +147,8 @@ document.addEventListener('DOMContentLoaded', () => {
             node.style.opacity = String(opacity);
             node.style.transform = `translate3d(${direction * ((1 - enter) * 7 - leave * 7)}%,0,${-depth * ((1 - enter) + leave)}px) rotateY(${direction * twist * ((1 - enter) - leave)}deg)`;
             const travel = clamp((position - segment.start - viewport * 0.15) / Math.max(1, segment.duration - viewport * 0.35));
-            contents[index].style.transform = `translate3d(0,${-segment.overflow * travel}px,0)`;
+            frozenY[index] = -segment.overflow * travel;
+            contents[index].style.transform = `translate3d(0,${frozenY[index]}px,0)`;
             if (position >= arriving + segment.transitionIn * 0.5) current = index;
         });
         setActive(current);
@@ -248,6 +260,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // The mobile keyboard resizes the viewport; rebuilding then would reset the scene and drop focus.
     let rebuildPending = false;
+    function revealField() {
+        if (!editing || !isField(document.activeElement)) return;
+        const viewport = window.visualViewport?.height || innerHeight;
+        const box = document.activeElement.getBoundingClientRect();
+        const limit = viewport - 24;
+        const top = navbar.getBoundingClientRect().height + 12;
+        if (box.bottom > limit) keyboardShift += box.bottom - limit;
+        else if (box.top < top) keyboardShift -= Math.min(keyboardShift, top - box.top);
+        renderJourney();
+    }
+    listen(document, 'focusin', event => {
+        if (!timeline || !isField(event.target) || !contents[active]?.contains(event.target)) return;
+        if (!editing) { editing = true; editScroll = window.scrollY; keyboardShift = 0; }
+        setTimeout(revealField, 50);
+        setTimeout(revealField, 400);
+    });
+    listen(document, 'focusout', () => {
+        setTimeout(() => {
+            if (!editing || isField(document.activeElement)) return;
+            editing = false;
+            keyboardShift = 0;
+            window.scrollTo({ top: editScroll, behavior: 'instant' });
+            renderJourney();
+        }, 300);
+    });
+    if (window.visualViewport) listen(window.visualViewport, 'resize', revealField);
     listen(document, 'focusout', () => {
         setTimeout(() => {
             if (rebuildPending && !document.activeElement?.matches('input,textarea,select')) {
